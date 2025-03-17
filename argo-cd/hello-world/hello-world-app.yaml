@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx
+  name: hello-world  # unique name for hello-world
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/leon-new/SamplegitOpsApp.git'
-    path: argo-cd/hello-world  # This should match the folder containing nginx.yaml
+    path: argo-cd/hello-world
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
@@ -16,5 +16,4 @@ spec:
     automated:
       selfHeal: true
       prune: true
-
 
