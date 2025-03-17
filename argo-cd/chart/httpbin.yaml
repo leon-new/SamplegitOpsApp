@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: httpbin  # Name of the ArgoCD application
+  namespace: argocd  # Namespace where ArgoCD runs
+spec:
+  project: default  # The ArgoCD project
+  source:
+    repoURL: 'https://matheusfm.dev/charts'  # URL of the Helm chart repository
+    chart: 'httpbin'  # The name of the chart to deploy
+    targetRevision: '0.1.1'  # Version of the chart to deploy
+    helm:
+      releaseName: httpbin  # The Helm release name
+  destination:
+    server: 'https://kubernetes.default.svc'  # The Kubernetes API server URL (for the cluster)
+    namespace: default  # The namespace where the application will be deployed
+  syncPolicy:
+    automated:
+      selfHeal: true  # Automatically sync the application if it's out of sync
+      prune: true  # Automatically remove resources no longer defined in the Git repository
+

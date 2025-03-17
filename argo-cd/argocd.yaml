@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd  # The name of the application
+  namespace: argocd  # Namespace for the ArgoCD application
+spec:
+  project: default  # The project within ArgoCD
+  source:
+    repoURL: 'https://github.com/leon-new/SamplegitOpsApp.git'  # Replace with your GitLab repository URL
+    path: argo-cd  # Path inside the repository where the manifests are stored
+    targetRevision: main  # The branch of the repository to sync (usually 'main' or 'master')
+  destination:
+    server: 'https://kubernetes.default.svc'  # Kubernetes API server URL
+    namespace: argocd  # The Kubernetes namespace where the application will be deployed
+  syncPolicy:
+    automated:
+      selfHeal: true  # Automatically heal the application if it's out of sync
+      prune: true  # Automatically prune resources that are no longer in the Git repository
+
